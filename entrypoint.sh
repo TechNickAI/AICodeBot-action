@@ -1,35 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-set -euo
+set -eu
 
-case "${INPUT_COMMENT_SEVERITY_LEVEL}" in
-    "info")
-        COMMENT_LEVEL=0
-        ;;
-    "warning")
-        COMMENT_LEVEL=1
-        ;;
-    "error")
-        COMMENT_LEVEL=2
-        ;;
-   *)
-        echo "Unknown comment severity level: ${INPUT_COMMENT_SEVERITY_LEVEL}"
-        exit 1
-        ;;
-esac
-
-if [ "${INPUT_FAIL_ON_ERROR}" = "true" ]; then
-    FAIL_ON_ERROR=1
-else
-    FAIL_ON_ERROR=0
+# Check if required inputs are set
+if [[ -z "${INPUT_OPENAI_API_KEY}" ]]; then
+    echo "Error: The OPENAI_API_KEY is not set. Please set it as an environment variable."
+    exit 1
 fi
 
-if [ "${INPUT_ENABLE_GIF_REACTIONS}" = "true" ]; then
-    ENABLE_GIF_REACTIONS=1
-else
-    ENABLE_GIF_REACTIONS=0
-fi
+# Export inputs as environment variables
+export OPENAI_API_KEY=${INPUT_OPENAI_API_KEY}
+export COMMENT_SEVERITY_LEVEL=${INPUT_COMMENT_SEVERITY_LEVEL:-info}
+export FAIL_ON_ERROR=${INPUT_FAIL_ON_ERROR:-false}
+export ENABLE_GIF_REACTIONS=${INPUT_ENABLE_GIF_REACTIONS:-false}
 
-echo "Comment severity level: $COMMENT_LEVEL"
-echo "Fail on error: $FAIL_ON_ERROR"
-echo "Enable GIF reactions: $ENABLE_GIF_REACTIONS"
+# Run aicodebot in the context of the repository
+cd ${GITHUB_WORKSPACE}
+aicodebot review -c ${GITHUB_SHA}
