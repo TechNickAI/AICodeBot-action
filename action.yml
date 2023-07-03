@@ -1,0 +1,24 @@
+name: 'AICodeBot Code Review'
+description: 'Automatically reviews code in commits and pull requests'
+inputs:
+  github_token:
+    description: 'GitHub token'
+    required: true
+  openai_api_key:
+    description: 'OpenAI API Key'
+    required: true
+  comment_severity_level:
+    description: 'The level of issues that should trigger a comment (options: "info", "warning", "error")'
+    required: false
+    default: 'info'
+  fail_on_error:
+    description: 'Whether the action should fail the build when it finds a serious issue'
+    required: false
+    default: 'false'
+  enable_gif_reactions:
+    description: 'Whether to include GIF reactions in comments'
+    required: false
+    default: 'false'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
