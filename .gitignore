@@ -1,0 +1,10 @@
+*.pyc
+*.swp
+.DS_Store
+.env
+.pytest_cache
+.vscode
+__pycache__
+aicodebot.egg-info/
+build/
+dist/
