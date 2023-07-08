@@ -4,7 +4,12 @@ set -eu
 
 # Check if required inputs are set
 if [[ -z "${INPUT_OPENAI_API_KEY:-}" ]]; then
-    echo "Error: The INPUT_OPENAI_API_KEY is not set. Please set it as an environment variable."
+    echo "🛑 The OpenAI API Key is not set. This key is REQUIRED for the AICodeBot."
+    echo "You can get one for free at https://platform.openai.com/account/api-keys"
+    echo
+    echo "Please set it as a repository secret named 'OPENAI_API_KEY'."
+    echo "For more information on how to set up repository secrets, visit:"
+    echo "https://docs.github.com/en/actions/security-guides/encrypted-secrets"
     exit 1
 fi
 
