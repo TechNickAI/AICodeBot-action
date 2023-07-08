@@ -13,8 +13,8 @@ if [[ -z "${INPUT_OPENAI_API_KEY:-}" ]]; then
     exit 1
 fi
 
-echo "Using OpenAI API key: ${OPENAI_API_KEY:0:5}..."
 export OPENAI_API_KEY=${INPUT_OPENAI_API_KEY}
+echo "Using OpenAI API key: ${OPENAI_API_KEY:0:5}..."
 
 # Run aicodebot in the context of the repository
 echo "Running aicodebot in ${GITHUB_WORKSPACE} on sha ${GITHUB_SHA:0:8}"
