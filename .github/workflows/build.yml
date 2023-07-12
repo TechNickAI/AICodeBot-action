@@ -1,0 +1,21 @@
+---
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+    docker-build:
+        name: Docker build
+        runs-on: ubuntu-latest
+        # Enable Buildkit and let compose use it to speed up image building
+        env:
+            DOCKER_BUILDKIT: 1
+            COMPOSE_DOCKER_CLI_BUILD: 1
+        timeout-minutes: 5
+
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Build the Docker images
+              run: docker-compose build
