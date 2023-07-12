@@ -33,7 +33,7 @@ jobs:
           fetch-depth: 0
 
       - name: AICodeBot Code Review
-        uses: gorillamania/AICodeBot-action@main
+        uses: gorillamania/AICodeBot-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
@@ -44,7 +44,7 @@ Code Review action.
 
 ## Setup
 
-To use this action, you need to set up the `OPENAI_API_KEY`` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys)
+To use this action, you need to set up the `OPENAI_API_KEY` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys)
 
 To set up the OPENAI_API_KEY as a secret, you can refer to the [GitHub documentation on secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
 
