@@ -57,6 +57,32 @@ print(f"Repo: {repo}")
 commit = repo.get_commit(os.getenv("GITHUB_SHA"))
 print(f"Commit: {commit}")
 
+# ---------------------------------------------------------------------------- #
+#                            Helpful debugging info                            #
+# ---------------------------------------------------------------------------- #
+ # Print out repo
+ print(f"Repository name: {repo.name}")
+ print(f"Repository description: {repo.description}")
+ print(f"Repository owner: {repo.owner.login}")
+ print(f"Repository created at: {repo.created_at}")
+ print(f"Repository updated at: {repo.updated_at}")
+ print(f"Repository pushed at: {repo.pushed_at}")
+ print(f"Repository language: {repo.language}")
+ print(f"Repository size: {repo.size}")
+ print(f"Repository default branch: {repo.default_branch}")
+ print(f"Repository open issues: {repo.open_issues}")
+ print(f"Repository watchers: {repo.watchers_count}")
+ print(f"Repository forks: {repo.forks_count}")
+ print(f"Repository stars: {repo.stargazers_count}")
+
+ # Print out commit information
+ print(f"Commit message: {commit.commit.message}")
+ print(f"Commit author: {commit.commit.author.name}")
+ print(f"Commit date: {commit.commit.author.date}")
+ print(f"Commit tree: {commit.commit.tree.sha}")
+ print(f"Commit comment count: {commit.commit.comment_count}")
+ print(f"Commit verification status: {commit.commit.verification.verified}")
+
 
 # ---------------------------------------------------------------------------- #
 #                         Leave a comment on the commit                        #
