@@ -19,4 +19,8 @@ echo "Using OpenAI API key: ${OPENAI_API_KEY:0:5}..."
 # Run aicodebot in the context of the repository
 echo "Running aicodebot in ${GITHUB_WORKSPACE} on sha ${GITHUB_SHA:0:8}"
 cd ${GITHUB_WORKSPACE}
+# Set up the aicodebot configuration from the OPENAI_API_KEY
+aicodebot configure
+
+# Run a code review on the current commit
 aicodebot review -c ${GITHUB_SHA}
