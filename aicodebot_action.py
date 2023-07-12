@@ -61,17 +61,20 @@ commit = repo.get_commit(os.getenv("GITHUB_SHA"))
 # ---------------------------------------------------------------------------- #
 
 
+if review_comments:
+    comment = "🤖AICodeBot Review Comments:\n" + review_comments
+    commit.create_comment(comment)
+    print(f"Comments: {comment}")
+
+# Then add a reaction to the comment
 if review_status == "PASSED":
-    commit.create_comment_reaction("+1")
-    print("👍 Code review passed!")
+    commit.create_comment_reaction("❤️")
+    print("❤️ Code review passed!")
 elif review_status == "FAILED":
     commit.create_comment_reaction("-1")
-    print("🛑 Code review failed!")
+    print("👎 Code review failed!")
     sys.exit(1)
 elif review_status == "COMMENTS":
-    print("🤔 Code review has comments.")
+    commit.create_comment_reaction("👀")
+    print("👍 Code review has comments.")
     sys.exit(0)
-
-if review_comments:
-    commit.create_comment(review_comments)
-    print(f"Comments: {review_comments}")
