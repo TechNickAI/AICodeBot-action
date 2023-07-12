@@ -37,18 +37,24 @@ review_status=$(echo $review_output | jq -r '.review_status')
 review_comments=$(echo $review_output | jq -r '.review_comments')
 
 # Magic to set the output variables for github workflows
-echo "::set-output name=review_status::$review_status"
-echo "::set-output name=review_comments::$review_comments"
+echo "{review_status}={$review_status}" >>$GITHUB_STATE
+echo "{review_comments}={$review_comments}" >>$GITHUB_STATE
 
 if [[ $review_status == "PASSED" ]]; then
     # TOOD: Add thumbs up reaction to the commit
-    true
+    echo "👍 Code review passed!"
+    echo "Comments: $review_comments"
+    exit 0
 elif [[ $review_status == "FAILED" ]]; then
     # TODO: Leave a comment with the review_comments
+    echo "🛑 Code review failed!"
+    echo "Comments: $review_comments"
 
     # Fail the action
     exit 1
 elif [[ $review_status == "COMMENTS" ]]; then
     # TODO: Leave a comment with the review_comments
-    true
+    echo "🤔 Code review has comments. Please review the suggestions"
+    echo "Comments: $review_comments"
+    exit 1
 fi
