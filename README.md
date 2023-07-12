@@ -42,6 +42,14 @@ jobs:
 In this example, the action is triggered whenever a push or pull request event occurs. It checks out your code and then runs the AICodeBot
 Code Review action.
 
+## Outputs
+
+The response will include a review_status and a review_comments.  There are three possible review_status values:
+
+* PASSED: ✅ The code review passed
+* FAILED: 🛑 At least one serious issue was found, and the action will fail
+* COMMENTS: ⚠️ The code review passed, but there are some suggestions for improvement
+
 ## Setup
 
 To use this action, you need to set up the `OPENAI_API_KEY` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys)
