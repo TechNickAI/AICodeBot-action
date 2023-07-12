@@ -1,6 +1,6 @@
 ---
 name: "AICodeBot Code Review"
-description: "Automatically reviews code in commits and pull requests"
+description: "AI to review code in commits and pull requests"
 
 inputs:
   github_token:

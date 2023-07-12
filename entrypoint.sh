@@ -26,7 +26,7 @@ git config --global --add safe.directory /github/workspace
 # Set up the aicodebot configuration from the OPENAI_API_KEY
 aicodebot configure
 
-acodebot version
+aicodebot version
 
 # Run a code review on the current commit
 review_output=$(aicodebot review -c ${GITHUB_SHA} --output-format=json) || {
