@@ -74,8 +74,6 @@ print(f"Commit message: {commit.commit.message}")
 print(f"Commit author: {commit.commit.author.name}")
 print(f"Commit date: {commit.commit.author.date}")
 print(f"Commit tree: {commit.commit.tree.sha}")
-print(f"Commit comment count: {commit.commit.comment_count}")
-print(f"Commit verification status: {commit.commit.verification.verified}")
 
 
 # ---------------------------------------------------------------------------- #
