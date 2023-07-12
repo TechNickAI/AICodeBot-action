@@ -41,7 +41,13 @@ with open(os.getenv("GITHUB_STATE"), "a") as f:  #  noqa: PTH123
 # ---------------------------------------------------------------------------- #
 #                           Set up the github client                           #
 # ---------------------------------------------------------------------------- #
-g = Github(os.getenv("GITHUB_TOKEN"))
+review_comments = "This is a test comment"
+review_status = "PASSED"
+
+github_token = os.getenv("INPUT_GITHUB_TOKEN")
+assert github_token, "🛑 The GITHUB_TOKEN is not set. This key is REQUIRED for the AICodeBot."
+
+g = Github(github_token)
 
 # Get the repository
 repo = g.get_repo(os.getenv("GITHUB_REPOSITORY"))
@@ -83,18 +89,18 @@ print(f"Commit tree: {commit.commit.tree.sha}")
 
 if review_comments:
     comment = "🤖AICodeBot Review Comments:\n" + review_comments
-    commit.create_comment(comment)
     print(f"Comments: {comment}")
+    commit_comment = commit.create_comment(comment)
 
 # Then add a reaction to the comment
 if review_status == "PASSED":
-    commit.create_comment_reaction("❤️")
+    commit_comment.create_reaction("heart")
     print("❤️ Code review passed!")
 elif review_status == "FAILED":
-    commit.create_comment_reaction("-1")
+    commit_comment.create_reaction("-1")
     print("👎 Code review failed!")
     sys.exit(1)
 elif review_status == "COMMENTS":
-    commit.create_comment_reaction("👀")
+    commit_comment.create_reaction("eyes")
     print("👍 Code review has comments.")
     sys.exit(0)
