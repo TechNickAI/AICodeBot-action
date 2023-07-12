@@ -4,9 +4,9 @@ RUN apt-get update && apt-get install -y git jq
 
 RUN pip install aicodebot
 
-COPY entrypoint.sh /entrypoint.sh
+COPY aicodebot_action.py /aicodebot_action.py
 
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /aicodebot_action.py
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/aicodebot_action.py"]
 

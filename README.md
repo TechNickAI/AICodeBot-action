@@ -19,6 +19,13 @@ name: AICodeBot
 
 on: [push,pull_request]
 
+# Permissions for the GitHub token.
+# This is so the bot can comment on the commit or pull request with the results of the code review.
+permissions:
+  pull-requests: write
+  issues: write
+  contents: write
+
 jobs:
   review:
     name: AICodeBot Code Review
@@ -39,8 +46,7 @@ jobs:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
 ```
 
-In this example, the action is triggered whenever a push or pull request event occurs. It checks out your code and then runs the AICodeBot
-Code Review action.
+In this example, the action is triggered whenever a push or pull request event occurs. It checks out your code and then runs the AICodeBot Code Review action.
 
 ## Outputs
 
