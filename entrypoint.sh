@@ -37,8 +37,9 @@ review_output=$(aicodebot review -c ${GITHUB_SHA} --output-format=json) || {
 review_status=$(echo $review_output | jq -r '.review_status')
 review_comments=$(echo $review_output | jq -r '.review_comments')
 
-echo "Review Status: $review_status"
-echo "Review Comments: $review_comments"
+# Magic to set the output variables for github workflows
+echo "::set-output name=review_status::$review_status"
+echo "::set-output name=review_comments::$review_comments"
 
 if [[ $review_status == "PASSED" ]]; then
     # TOOD: Add thumbs up reaction to the commit

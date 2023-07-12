@@ -10,6 +10,12 @@ inputs:
     description: "OpenAI API Key"
     required: true
 
+outputs:
+  review_status:
+    description: "The status of the code review"
+  review_comments:
+    description: "The comments from the code review"
+
 runs:
   using: "docker"
   image: "Dockerfile"
