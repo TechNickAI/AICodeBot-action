@@ -29,6 +29,7 @@ extend-ignore = [
     "PLR0913", # don't complain about too many arguments
     "PLR2004", # Don't force every magic value to be a constant
     "PLW0120", # else without a break is fine (I use return with for-else)
+    "PTH123",  # path open not required
     "RET505",  # Allow for return values to be set outside of if/else blocks
     "RET506",  # Allow for return values to be set after raising an exception
     "RET507",  # Allow for return values to be set after continue
@@ -41,6 +42,7 @@ extend-ignore = [
     "S603",    # Trust us with subprocess
     "S607",    # Trust us with subprocess with partial commands
     "SIM108",  # Don't force ternary operators
+    "T201",    # print statements are ok
     "TRY003",  # long messages in exceptions are ok
 ]
 # https://beta.ruff.rs/docs/rules/#ruff-specific-rules-ruf
