@@ -19,6 +19,10 @@ echo "Using OpenAI API key: ${OPENAI_API_KEY:0:5}..."
 # Run aicodebot in the context of the repository
 echo "Running aicodebot in ${GITHUB_WORKSPACE} on sha ${GITHUB_SHA:0:8}"
 cd ${GITHUB_WORKSPACE}
+
+# Set up the git configuration. Allow the user to override the safe directory
+git config --global --add safe.directory /github/workspace
+
 # Set up the aicodebot configuration from the OPENAI_API_KEY
 aicodebot configure
 
