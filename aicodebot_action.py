@@ -51,9 +51,11 @@ g = Github(os.getenv("GITHUB_TOKEN"))
 
 # Get the repository
 repo = g.get_repo(os.getenv("GITHUB_REPOSITORY"))
+print(f"Repo: {repo}")
 
 # Get the commit
 commit = repo.get_commit(os.getenv("GITHUB_SHA"))
+print(f"Commit: {commit}")
 
 
 # ---------------------------------------------------------------------------- #
