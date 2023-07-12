@@ -26,5 +26,29 @@ git config --global --add safe.directory /github/workspace
 # Set up the aicodebot configuration from the OPENAI_API_KEY
 aicodebot configure
 
+acodebot version
+
 # Run a code review on the current commit
-aicodebot review -c ${GITHUB_SHA}
+review_output=$(aicodebot review -c ${GITHUB_SHA} --output-format=json) || {
+    echo "Error: aicodebot review command failed. Output was:"
+    echo $review_output
+    exit 1
+}
+review_status=$(echo $review_output | jq -r '.review_status')
+review_comments=$(echo $review_output | jq -r '.review_comments')
+
+echo "Review Status: $review_status"
+echo "Review Comments: $review_comments"
+
+if [[ $review_status == "PASSED" ]]; then
+    # TOOD: Add thumbs up reaction to the commit
+    true
+elif [[ $review_status == "FAILED" ]]; then
+    # TODO: Leave a comment with the review_comments
+
+    # Fail the action
+    exit 1
+elif [[ $review_status == "COMMENTS" ]]; then
+    # TODO: Leave a comment with the review_comments
+    true
+fi
