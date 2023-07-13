@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
+from aicodebot.cli import cli
+from click.testing import CliRunner
 from github import Github
 import json, os, subprocess, sys
+
+# ---------------------------------------------------------------------------- #
+#                                    Set up                                    #
+# ---------------------------------------------------------------------------- #
 
 # Check if required inputs are set
 openai_api_key = os.getenv("INPUT_OPENAI_API_KEY")  # Note this is prefixed with INPUT_ through actions
@@ -13,6 +19,9 @@ if not openai_api_key:
     print("https://docs.github.com/en/actions/security-guides/encrypted-secrets")
     sys.exit(1)
 
+# Set up the personality, defaulting to "Her"
+os.environ["AICODEBOT_PERSONALITY"] = os.getenv("INPUT_AICODEBOT_PERSONALITY", "Her")
+
 # Set up the git configuration. Allow the user to override the safe directory
 subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/github/workspace"])
 
@@ -21,16 +30,18 @@ subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/github
 # ---------------------------------------------------------------------------- #
 
 # Set up the aicodebot configuration from the OPENAI_API_KEY
-subprocess.run(["aicodebot", "-V"])
-subprocess.run(["aicodebot", "configure", "--openai-api-key", openai_api_key])
+cli_runner = CliRunner()
+result = cli_runner.invoke(cli, ["-V"])
+print("AICodeBot version:", result.output)
+
+result = cli_runner.invoke(cli, ["configure", "--openai-api-key", openai_api_key, "--personality", "Her"])
+print("Configure:", result.output)
 
 # Run a code review on the current commit
-review_output = subprocess.run(
-    ["aicodebot", "review", "-c", os.getenv("GITHUB_SHA"), "--output-format=json"],
-    capture_output=True,
-    text=True,
-)
-review_output = json.loads(review_output.stdout)
+result = cli_runner.invoke(cli, ["review", "-c", os.getenv("GITHUB_SHA"), "--output-format", "json"])
+print("Review:", result.output)
+
+review_output = json.loads(result.output)
 review_status = review_output["review_status"]
 review_comments = review_output["review_comments"]
 
@@ -50,18 +61,13 @@ g = Github(github_token)
 # Get the repository
 repo = g.get_repo(os.getenv("GITHUB_REPOSITORY"))
 print(f"Repo: {repo}")
-
-# Get the commit
-commit = repo.get_commit(os.getenv("GITHUB_SHA"))
-print(f"Commit: {commit}")
-
-# ---------------------------------------------------------------------------- #
-#                            Helpful debugging info                            #
-# ---------------------------------------------------------------------------- #
 print(f"Repository name: {repo.name}")
 print(f"Repository owner: {repo.owner.login}")
 print(f"Repository pushed at: {repo.pushed_at}")
 
+# Get the commit
+commit = repo.get_commit(os.getenv("GITHUB_SHA"))
+print(f"Commit: {commit}")
 print(f"Commit message: {commit.commit.message}")
 print(f"Commit author: {commit.commit.author.name}")
 print(f"Commit date: {commit.commit.author.date}")
@@ -72,19 +78,22 @@ print(f"Commit date: {commit.commit.author.date}")
 
 # First leave a comment on the commit
 if review_comments:
-    comment = "🤖AICodeBot Review Comments:\n" + review_comments
-    print(f"Comments: {comment}")
-    commit_comment = commit.create_comment(comment)
+    print(f"Review: {review_comments}")
+
+comment = (
+    "🤖AICodeBot Review Comments:\n\n" + review_comments + "\n\n[AICodeBot](https://github.com/gorillamania/AICodeBot)"
+)
 
 # Then add a reaction to the comment
 if review_status == "PASSED":
-    commit_comment.create_reaction("heart")
     print("❤️ Code review passed!")
 elif review_status == "FAILED":
+    commit_comment = commit.create_comment(comment)
     commit_comment.create_reaction("-1")
     print("👎 Code review failed!")
     sys.exit(1)
 elif review_status == "COMMENTS":
+    commit_comment = commit.create_comment(comment)
     commit_comment.create_reaction("eyes")
     print("👍 Code review has comments.")
     sys.exit(0)

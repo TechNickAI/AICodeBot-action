@@ -56,6 +56,8 @@ The response will include a review_status and a review_comments.  There are thre
 * FAILED: 🛑 At least one serious issue was found, and the action will fail
 * COMMENTS: ⚠️ The code review passed, but there are some suggestions for improvement
 
+When a code review fails or has comments, the action will add a comment to the commit or pull request with the review_comments.
+
 ## Setup
 
 To use this action, you need to set up the `OPENAI_API_KEY` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys)

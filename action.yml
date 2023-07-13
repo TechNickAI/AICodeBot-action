@@ -13,6 +13,10 @@ inputs:
   openai_api_key:
     description: "OpenAI API Key"
     required: true
+  aicodebot_personality:
+    description: "The personality of the AICodeBot to respond with"
+    required: false
+    default: "Her"
 
 outputs:
   review_status:
