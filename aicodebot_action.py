@@ -10,6 +10,7 @@ import json, os, subprocess, sys
 
 # Check if required inputs are set
 openai_api_key = os.getenv("INPUT_OPENAI_API_KEY")  # Note this is prefixed with INPUT_ through actions
+os.environ["OPENAI_API_KEY"] = openai_api_key
 if not openai_api_key:
     print("🛑 The OpenAI API Key is not set. This key is REQUIRED for the AICodeBot.")
     print("You can get one for free at https://platform.openai.com/account/api-keys")
@@ -33,10 +34,6 @@ subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/github
 cli_runner = CliRunner()
 result = cli_runner.invoke(cli, ["-V"])
 print("AICodeBot version:", result.output)
-assert result.exit_code == 0
-
-result = cli_runner.invoke(cli, ["configure", "--openai-api-key", openai_api_key])
-print("Configure:", result.output)
 assert result.exit_code == 0
 
 # Run a code review on the current commit
