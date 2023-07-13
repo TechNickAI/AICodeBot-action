@@ -33,13 +33,16 @@ subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/github
 cli_runner = CliRunner()
 result = cli_runner.invoke(cli, ["-V"])
 print("AICodeBot version:", result.output)
+assert result.exit_code == 0
 
-result = cli_runner.invoke(cli, ["configure", "--openai-api-key", openai_api_key, "--personality", "Her"])
+result = cli_runner.invoke(cli, ["configure", "--openai-api-key", openai_api_key])
 print("Configure:", result.output)
+assert result.exit_code == 0
 
 # Run a code review on the current commit
 result = cli_runner.invoke(cli, ["review", "-c", os.getenv("GITHUB_SHA"), "--output-format", "json"])
 print("Review:", result.output)
+assert result.exit_code == 0
 
 review_output = json.loads(result.output)
 review_status = review_output["review_status"]
