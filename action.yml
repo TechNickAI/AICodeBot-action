@@ -17,6 +17,10 @@ inputs:
     description: "The personality of the AICodeBot to respond with"
     required: false
     default: "Her"
+  comment_on_passed:
+    # Not recommended, as it can be noisy - it will send an email to the committer on every commit
+    description: "Create a comment on a PASSED review"
+    required: false
 
 outputs:
   review_status:
