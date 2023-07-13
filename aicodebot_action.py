@@ -26,14 +26,18 @@ os.environ["AICODEBOT_PERSONALITY"] = os.getenv("INPUT_AICODEBOT_PERSONALITY", "
 # Set up the git configuration. Allow the user to override the safe directory
 subprocess.run(["git", "config", "--global", "--add", "safe.directory", "/github/workspace"])
 
+# Test the CLI
+cli_runner = CliRunner()
+result = cli_runner.invoke(cli, ["-V"])
+print("AICodeBot version:", result.output)
+assert result.exit_code == 0
+
 # ---------------------------------------------------------------------------- #
 #                              Run the code review                             #
 # ---------------------------------------------------------------------------- #
 
 # Set up the aicodebot configuration from the OPENAI_API_KEY
-cli_runner = CliRunner()
-result = cli_runner.invoke(cli, ["-V"])
-print("AICodeBot version:", result.output)
+result = cli_runner.invoke(cli, ["configure", "--openai-api-key", openai_api_key])
 assert result.exit_code == 0
 
 # Run a code review on the current commit
