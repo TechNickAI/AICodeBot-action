@@ -3,7 +3,7 @@ from github import Github
 import json, os, subprocess, sys
 
 # Check if required inputs are set
-openai_api_key = os.getenv("INPUT_OPENAI_API_KEY")
+openai_api_key = os.getenv("INPUT_OPENAI_API_KEY")  # Note this is prefixed with INPUT_ through actions
 if not openai_api_key:
     print("🛑 The OpenAI API Key is not set. This key is REQUIRED for the AICodeBot.")
     print("You can get one for free at https://platform.openai.com/account/api-keys")
@@ -41,10 +41,8 @@ with open(os.getenv("GITHUB_STATE"), "a") as f:  #  noqa: PTH123
 # ---------------------------------------------------------------------------- #
 #                           Set up the github client                           #
 # ---------------------------------------------------------------------------- #
-review_comments = "This is a test comment"
-review_status = "PASSED"
 
-github_token = os.getenv("INPUT_GITHUB_TOKEN")
+github_token = os.getenv("INPUT_GITHUB_TOKEN")  # Note this is prefixed with INPUT_ through actions
 assert github_token, "🛑 The GITHUB_TOKEN is not set. This key is REQUIRED for the AICodeBot."
 
 g = Github(github_token)
@@ -60,33 +58,19 @@ print(f"Commit: {commit}")
 # ---------------------------------------------------------------------------- #
 #                            Helpful debugging info                            #
 # ---------------------------------------------------------------------------- #
-# Print out repo
 print(f"Repository name: {repo.name}")
-print(f"Repository description: {repo.description}")
 print(f"Repository owner: {repo.owner.login}")
-print(f"Repository created at: {repo.created_at}")
-print(f"Repository updated at: {repo.updated_at}")
 print(f"Repository pushed at: {repo.pushed_at}")
-print(f"Repository language: {repo.language}")
-print(f"Repository size: {repo.size}")
-print(f"Repository default branch: {repo.default_branch}")
-print(f"Repository open issues: {repo.open_issues}")
-print(f"Repository watchers: {repo.watchers_count}")
-print(f"Repository forks: {repo.forks_count}")
-print(f"Repository stars: {repo.stargazers_count}")
 
-# Print out commit information
 print(f"Commit message: {commit.commit.message}")
 print(f"Commit author: {commit.commit.author.name}")
 print(f"Commit date: {commit.commit.author.date}")
-print(f"Commit tree: {commit.commit.tree.sha}")
-
 
 # ---------------------------------------------------------------------------- #
 #                         Leave a comment on the commit                        #
 # ---------------------------------------------------------------------------- #
 
-
+# First leave a comment on the commit
 if review_comments:
     comment = "🤖AICodeBot Review Comments:\n" + review_comments
     print(f"Comments: {comment}")
