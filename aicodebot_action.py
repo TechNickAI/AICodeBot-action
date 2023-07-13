@@ -98,7 +98,7 @@ comment = (
 if review_status == "PASSED":
     if os.getenv("INPUT_COMMENT_ON_PASSED"):
         commit_comment = commit.create_comment(comment)
-        commit.create_reaction("heart")
+        commit_comment.create_reaction("heart")
     print("✅️ Code review passed!")
 elif review_status == "FAILED":
     commit_comment = commit.create_comment(comment)
