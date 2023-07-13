@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from aicodebot.cli import cli
+from aicodebot.config import get_config_file
 from click.testing import CliRunner
 from github import Github
+from pathlib import Path
 import json, os, subprocess, sys
 
 # ---------------------------------------------------------------------------- #
@@ -10,7 +12,6 @@ import json, os, subprocess, sys
 
 # Check if required inputs are set
 openai_api_key = os.getenv("INPUT_OPENAI_API_KEY")  # Note this is prefixed with INPUT_ through actions
-os.environ["OPENAI_API_KEY"] = openai_api_key
 if not openai_api_key:
     print("🛑 The OpenAI API Key is not set. This key is REQUIRED for the AICodeBot.")
     print("You can get one for free at https://platform.openai.com/account/api-keys")
@@ -19,6 +20,9 @@ if not openai_api_key:
     print("For more information on how to set up repository secrets, visit:")
     print("https://docs.github.com/en/actions/security-guides/encrypted-secrets")
     sys.exit(1)
+
+# Set the OPENAI_API_KEY environment variable
+os.environ["OPENAI_API_KEY"] = openai_api_key
 
 # Set up the personality, defaulting to "Her"
 os.environ["AICODEBOT_PERSONALITY"] = os.getenv("INPUT_AICODEBOT_PERSONALITY", "Her")
@@ -38,7 +42,9 @@ assert result.exit_code == 0
 
 # Set up the aicodebot configuration from the OPENAI_API_KEY
 result = cli_runner.invoke(cli, ["configure", "--openai-api-key", openai_api_key])
+print(f"Configure: {result.output}")
 assert result.exit_code == 0
+assert Path(get_config_file()).exists()
 
 # Run a code review on the current commit
 result = cli_runner.invoke(cli, ["review", "-c", os.getenv("GITHUB_SHA"), "--output-format", "json"])
