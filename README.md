@@ -48,6 +48,12 @@ jobs:
 
 In this example, the action is triggered whenever a push or pull request event occurs. It checks out your code and then runs the AICodeBot Code Review action.
 
+## Setup
+
+To use this action, you need to set up the `OPENAI_API_KEY` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys). Typical usage will cost < $5 a month.
+
+To set up the OPENAI_API_KEY as a secret in your GitHub repository, you can refer to the [GitHub documentation on secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets). 
+
 ## Outputs
 
 The response will include a review_status and a review_comments.  There are three possible review_status values:
@@ -58,11 +64,6 @@ The response will include a review_status and a review_comments.  There are thre
 
 When a code review fails or has comments, the action will add a comment to the commit or pull request with the review_comments.
 
-## Setup
-
-To use this action, you need to set up the `OPENAI_API_KEY` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys)
-
-To set up the OPENAI_API_KEY as a secret, you can refer to the [GitHub documentation on secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
 
 ## Alignment ❤️ + 🤖
 
