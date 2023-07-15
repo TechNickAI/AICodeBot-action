@@ -91,7 +91,9 @@ if review_comments:
     print(f"Review: {review_comments}")
 
 comment = (
-    "🤖AICodeBot Review Comments:\n\n" + review_comments + "\n\n[AICodeBot](https://github.com/gorillamania/AICodeBot)"
+    "🤖 AICodeBot Review Comments:\n\n"
+    + review_comments
+    + "\n\nCode review automatically created with [AICodeBot](https://github.com/gorillamania/AICodeBot)"
 )
 
 # Then add a reaction to the comment
