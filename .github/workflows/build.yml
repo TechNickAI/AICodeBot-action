@@ -4,18 +4,34 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-    docker-build:
-        name: Docker build
-        runs-on: ubuntu-latest
-        # Enable Buildkit and let compose use it to speed up image building
-        env:
-            DOCKER_BUILDKIT: 1
-            COMPOSE_DOCKER_CLI_BUILD: 1
-        timeout-minutes: 5
+  docker-build:
+    name: Docker build
+    runs-on: ubuntu-latest
+    # Enable Buildkit and let compose use it to speed up image building
+    env:
+      DOCKER_BUILDKIT: 1
+      COMPOSE_DOCKER_CLI_BUILD: 1
+      timeout-minutes: 5
 
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v3
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-            - name: Build the Docker images
-              run: docker build -t aicodebot .
+      - name: Build the Docker images
+        run: docker build -t aicodebot .
+
+  pytest:
+    name: Run Pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt -r requirements-test.txt
