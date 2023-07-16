@@ -1,9 +1,10 @@
 version: 2
 updates:
-  - package-ector: "docker"
+  - package-ecosystem: "docker"
     schedule:
-      interval: "daily"
-    time: "06:00"
-    timezone: "America/Los_Angeles"
-    assignees:
-      - "gorillamania"
+      interval: "weekly"
+      day: "thursday"
+  - package-ecosystem: "github-actions"
+    schedule:
+      interval: "weekly"
+      day: "thursday"
