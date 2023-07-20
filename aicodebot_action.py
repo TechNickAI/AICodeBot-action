@@ -8,7 +8,7 @@ from pathlib import Path
 import json, os, subprocess, sys
 
 
-def main(comment_on_commit=True):
+def main(comment=True):
     """Run the AICodeBot action"""
     cli_runner = setup_cli()
     review_status, review_comments = review_code(cli_runner)
@@ -17,7 +17,7 @@ def main(comment_on_commit=True):
     else:
         exit_status = 0
 
-    if comment_on_commit:
+    if comment:
         comment_on_commit(review_status, review_comments)
     sys.exit(exit_status)
 

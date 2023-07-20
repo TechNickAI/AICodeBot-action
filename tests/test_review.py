@@ -16,4 +16,4 @@ def test_commit_review(tmp_path):
     assert "aicodebot.yaml" in os.getenv("AICODEBOT_CONFIG_FILE")
 
     # TODO: Mock the github client so we can test the comment on commit as well
-    aicodebot_action.main(comment_on_commit=False)
+    aicodebot_action.main(comment=False)
