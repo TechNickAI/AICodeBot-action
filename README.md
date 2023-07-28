@@ -52,7 +52,7 @@ In this example, the action is triggered whenever a push or pull request event o
 
 To use this action, you need to set up the `OPENAI_API_KEY` as a secret in your GitHub repository. This key is required for the AICodeBot to function. You can obtain this key on your [OpenAI api settings page](https://platform.openai.com/account/api-keys). Typical usage will cost < $5 a month.
 
-To set up the OPENAI_API_KEY as a secret in your GitHub repository, you can refer to the [GitHub documentation on secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets). 
+To set up the OPENAI_API_KEY as a secret in your GitHub repository, you can refer to the [GitHub documentation on secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets).
 
 ## Outputs
 
@@ -60,10 +60,9 @@ The response will include a review_status and a review_comments.  There are thre
 
 * PASSED: ✅ The code review passed
 * FAILED: 🛑 At least one serious issue was found, and the action will fail
-* COMMENTS: ⚠️ The code review passed, but there are some suggestions for improvement
+* COMMENTS: ⚠️ The code review passed, but there are some suggestions for improvement. [Real world example](https://github.com/gorillamania/AICodeBot/commit/a8ba588a5deaf9b863d5b103061a715a2924e908#commitcomment-122803771)
 
 When a code review fails or has comments, the action will add a comment to the commit or pull request with the review_comments.
-
 
 ## Alignment ❤️ + 🤖
 
