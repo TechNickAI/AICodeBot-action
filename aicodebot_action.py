@@ -8,7 +8,7 @@ from pathlib import Path
 import json, os, subprocess, sys
 
 
-def main(comment=True):
+def main(comment_on_commit=True):
     """Run the AICodeBot action"""
     cli_runner = setup_cli()
     review_status, review_comments = review_code(cli_runner)
@@ -17,7 +17,7 @@ def main(comment=True):
     else:
         exit_status = 0
 
-    if comment:
+    if comment_on_commit:
         comment_on_commit(review_status, review_comments)
     sys.exit(exit_status)
 
@@ -38,7 +38,11 @@ def setup_cli():
     https://docs.github.com/en/actions/security-guides/encrypted-secrets
     """
         )
-        sys.exit(1)
+        if os.getenv("GITHUB_BASE_REF"):
+            print("Since this failure on a forked repository, we'll let the action pass without code review.")
+            sys.exit(0)
+        else:
+            sys.exit(1)
 
     # Set the OPENAI_API_KEY environment variable
     os.environ["OPENAI_API_KEY"] = openai_api_key
