@@ -8,7 +8,7 @@ from pathlib import Path
 import json, os, subprocess, sys
 
 
-def main(comment_on_commit=True):
+def main(do_comment_on_commit=True):
     """Run the AICodeBot action"""
     cli_runner = setup_cli()
     review_status, review_comments = review_code(cli_runner)
@@ -17,7 +17,7 @@ def main(comment_on_commit=True):
     else:
         exit_status = 0
 
-    if comment_on_commit:
+    if do_comment_on_commit:
         comment_on_commit(review_status, review_comments)
     sys.exit(exit_status)
 
@@ -28,7 +28,7 @@ def setup_cli():
     # Check if required inputs are set
     openai_api_key = os.getenv("INPUT_OPENAI_API_KEY")  # Note this is prefixed with INPUT_ through actions
     if not openai_api_key:
-        print(
+        logger.error(
             """
     🛑 The OPENAI_API_KEY is not set. This key is required for the AICodeBot.
     You can get one for free at https://platform.openai.com/account/api-keys
@@ -39,7 +39,7 @@ def setup_cli():
     """
         )
         if os.getenv("GITHUB_BASE_REF"):
-            print("Since this failure on a forked repository, we'll let the action pass without code review.")
+            logger.success("Since this failure on a forked repository, we'll let the action pass without code review.")
             sys.exit(0)
         else:
             sys.exit(1)
