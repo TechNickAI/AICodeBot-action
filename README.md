@@ -40,7 +40,7 @@ jobs:
           fetch-depth: 0
 
       - name: AICodeBot Code Review
-        uses: gorillamania/AICodeBot-action@v1
+        uses: TechNickAI/AICodeBot-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
