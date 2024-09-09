@@ -1,5 +1,5 @@
 ---
-name: "AICodeBot"
+name: "AICodeBot Code Review"
 author: Nick Sullivan @TechNickAI
 description: "AI to review code in commits and pull requests"
 branding:
@@ -10,9 +10,12 @@ inputs:
   github_token:
     description: "GitHub token"
     required: true
+  anthropic_api_key:
+    description: "Anthropic API Key"
+    required: false
   openai_api_key:
     description: "OpenAI API Key"
-    required: true
+    required: false
   aicodebot_personality:
     description: "The personality of the AICodeBot to respond with"
     required: false
