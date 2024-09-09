@@ -1,6 +1,6 @@
 ---
-name: "AICodeBot Code Review"
-author: Nick Sullivan @gorillamania
+name: "AICodeBot"
+author: Nick Sullivan @TechNickAI
 description: "AI to review code in commits and pull requests"
 branding:
   icon: "code"
